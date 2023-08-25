@@ -39,7 +39,9 @@
 <h2>Conclusiones TP </h2>
 <ul>
 
-<li><p></p></li>
+<li><p>Java resultó ser más rápido a la hora de su ejecución y composición del desarrollo. Sin embargo en el contexto del desarrollo de aplicaciones Android, Kotlin suele ser recomendado ya que surgió para facilitar la escritura, siendo más conciso y seguro en términos de manejo de nulos. Al ser diseñado bajo este objetivo, puede consumir los recursos, librerías y hasta la máquina virtual de Java. Por lo que ambos lenguajes pueden convivir en un mismo proyecto.
+Sin embargo, para otros tipos de desarrollo, la elección entre Java y Kotlin puede depender de varios factores, como las necesidades específicas del proyecto y las preferencias de los desarrolladores.
+</p></li>
 
 
 </ul>
