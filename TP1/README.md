@@ -22,8 +22,8 @@
 
 
 <li>Lamothe, Genty Clarke<ul>
-	<li>Legajo:  </li>
-	<li><a href="asd" >asd</a> </li>
+	<li>Legajo: 1678280  </li>
+	<li><a href="https://github.com/clarkelamothe" >https://github.com/clarkelamothe</a> </li>
 	</ul></li>
 
 <li>Mendiolar Colombo, Nahuel Nehuen<ul>
