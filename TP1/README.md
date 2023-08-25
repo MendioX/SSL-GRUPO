@@ -6,13 +6,35 @@
 <body>
 	<h1>TP1 Lenguajes: Java vs Kotlin</h1>
 
-<h2>Información Personal</h2>
+<h2>Información Grupal</h2>
 <ul>
-	<li>Curso: Sintaxis y Semántica de los Lenguajes</li>
-	<li>Año de cursada: 2023</li>
-	<li>Legajo: 1691880 </li>
-	<li>Apellido: Mendiolar Colombo</li>
-	<li>Nombre: Nahuel Nehuen</li>
+	<h3>Integrantes</h3>
+<ul>
+	<li>Gaetan, María Luz<ul>
+	<li>Legajo: 163627-3 </li>
+	<li><a href="https://github.com/lgaetan" >https://github.com/lgaetan</a> </li>
+	</ul></li>
+	
+<li>Laino, Ramiro Angel<ul>
+	<li>Legajo: 175883-4 </li>
+	<li><a href="https://github.com/LainoRamiro" >https://github.com/LainoRamiro</a> </li>
+	</ul></li>
+
+
+<li>Lamothe, Genty Clarke<ul>
+	<li>Legajo:  </li>
+	<li><a href="asd" >asd</a> </li>
+	</ul></li>
+
+<li>Mendiolar Colombo, Nahuel Nehuen<ul>
+	<li>Legajo: 169188-0 </li>
+	<li><a href="https://github.com/MendioX/" >https://github.com/MendioX/</a> </li>
+	</ul></li>	
+
+<li>Rolando, Sebastian<ul>
+	<li>Legajo:  </li>
+	<li><a href="asd" >asd</a> </li>
+	</ul></li>
 </ul>
 <h2>Contenido TP </h2>
 <ul>
