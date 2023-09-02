@@ -3,7 +3,8 @@ import java.math.BigInteger;
 fun main(args: Array<String>) {
     val L = 10
 
-    var n = if(args.size > 0) args[0].toInt() else 27
+    // var n = if(args.size > 0) args[0].toInt() else 27
+    var n = 5000
     var j = 0
 
     val digits = PiDigitSpigot()

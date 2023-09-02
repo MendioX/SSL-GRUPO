@@ -4,7 +4,7 @@ final class piDigits {
   static final int L = 10;
 
   public static void main (String args[]) {
-    int n = 100;
+    int n = 5000;
     int j = 0;
 
     PiDigitSpigot digits = new PiDigitSpigot();

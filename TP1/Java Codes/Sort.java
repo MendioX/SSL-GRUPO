@@ -4,9 +4,9 @@ import java.util.List;
 
 public class Sort {
     public static void main(String[] args) {
-        // Crear una lista de ejemplo con 1000 elementos no ordenados
+        // Crear una lista de ejemplo con 100000 elementos no ordenados
         List<Integer> lista = new ArrayList<>();
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 100000; i++) {
             lista.add((int) (Math.random() * 1000)); // Agregar números aleatorios
         }
 
