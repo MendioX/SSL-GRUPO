@@ -40,9 +40,11 @@ int VerificaHexadecimal (char *s) {
 
 int ColumnaDecimal (int c) {
  switch (c) {
+ case '0': return 0;
  case '+': return 1;
  case '-': return 2;
- default /* es digito */: return 0;
+
+ default /* es digito 1-9 */: return 3;
  }
 } /* fin Columna */
 
@@ -63,10 +65,10 @@ int ColumnaHexadecimal (int c) {
 
 
 int EsDecimal (const char *cadena) { /* Automata 1 */
- static int tt [4][3] = {{2,1,1}, /* Tabla de Transiciones */
- {2,3,3},
-{2,3,3},
-{3,3,3}};
+ static int tt [4][4] = {{3,1,1,2}, /* Tabla de Transiciones */
+ {3,3,3,2},
+{2,3,3,2},
+{3,3,3,3}};
  int e = 0; /* estado inicial */
  unsigned int i = 0; /* recorre la cadena */
  int c = cadena[0]; /* primer caracter */
@@ -117,7 +119,10 @@ int EsHexadecimal (const char *cadena) { /* Automata 1 */
 
 
 int main () {
- char s1[] = "0xFA2$12345$0123$0123987";
+	char s1[100];
+	scanf("%s", s1);
+	//hola
+
  //if (! VerificaOctal(s1)) printf("Caracteres invalidos\n");
  //if (EsOctal(s1))printf("Pertenece al lenguaje\n");
  //printf("no pertenece al lenguaje\n"); return 0;
@@ -137,16 +142,16 @@ int main () {
       if( VerificaDecimal(token) && EsDecimal(token)){
     	  x++;
     	  printf( "El numero %s es decimal \n", token);
+      }else if( VerificaOctal(token) && EsOctal(token)){
+    	  y++;
+    	  printf( "El numero %s es octal \n", token);
+      }else if( VerificaHexadecimal(token) && EsHexadecimal(token)){
+    	  z++;
+    	  printf( "El numero %s es hexadecimal \n", token);
+      } else{
+    	  w++;
+    	  printf("%s no corresponde a ningun numero, error lexico \n", token);
       }
-      if( VerificaOctal(token) && EsOctal(token)){
-          	  y++;
-          	  printf( "El numero %s es octal \n", token);
-      }
-      if( VerificaHexadecimal(token) && EsHexadecimal(token)){
-          	  z++;
-          	  printf( "El numero %s es hexadecimal \n", token);
-      }
-
 
 
       token = strtok(NULL, s);
@@ -154,8 +159,8 @@ int main () {
    printf("Son %d decimales \n", x);
    printf("Son %d octales \n", y);
    printf("Son %d hexadecimales \n", z);
+   printf("Son %d errores lexicos \n", w);
    return(0);
 }
-
 
 
