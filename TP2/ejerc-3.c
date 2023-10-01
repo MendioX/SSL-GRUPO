@@ -1,8 +1,8 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdbool.h>
 //Codigo para generar la cadena postfija (notacion polaca inversa)
 typedef struct opNodo
 {
@@ -206,10 +206,42 @@ int pop(ptrNodo* pila)
 
 
 
+void tomarCalculo(char cadena[]){
+
+printf("Ingrese el calculo a realizar: ");
+
+scanf("%s", cadena);
+
+}
+
+
+void nuevaOperacion(bool *seguir){
+char next;
+
+printf ("\n--------------------------------\n");
+printf ("Desea operar nuevamente? Y/N  -> ");
+
+scanf(" %c", &next);
+
+if (next == 'y' || next == 'Y')
+{
+	*seguir = true;
+	system("cls");
+}else{
+	*seguir= false;
+}
+}
 
 
 int main(){
-	char cadena[]="12*12-1000";
+	bool seguir = true;
+	
+	do{
+	
+	char cadena [100];
+	// char cadena[]="12*12-1000";
+
+	tomarCalculo(cadena);
 	char *postfija;
 	postfija=infijaToPostfija(cadena);
 	printf("%s \n",postfija);
@@ -263,5 +295,9 @@ int main(){
 		   }
 		   printf("%d", pop(&pila));
 
+		   nuevaOperacion(&seguir);
+	}while (seguir);
+	
+	printf("\n-------------Fin Programa---------------");
 	return 0;
 }
