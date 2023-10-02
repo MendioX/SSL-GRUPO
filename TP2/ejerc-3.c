@@ -4,6 +4,8 @@
 #include <ctype.h>
 #include <stdbool.h>
 //Codigo para generar la cadena postfija (notacion polaca inversa)
+
+// creamos la pila para los operadores
 typedef struct opNodo
 {
    char info;
@@ -39,7 +41,7 @@ int estaVacia(ptrNodoOp pila){
 	}
 }
 
-
+//devuelve un int que ese el nivel de precedencia del operador
 int nivelPrecedencia(char operador){
 	int nivel =0;
 	switch(operador){
@@ -78,6 +80,7 @@ int esOperador(char elemento){
 	}
 }
 
+//verifica que los caracters operando son decimales
 int esOperando(char elemento){
 	if(elemento >='0' && elemento <='9'){
 		return 1;
@@ -86,6 +89,8 @@ int esOperando(char elemento){
 	}
 }
 
+
+//transforma la cadena de la expresion aritmetica que se ingresa en notacion infija, a la notacion postfija (polaca inversa)
 char* infijaToPostfija(char * infija){
 	char elemento,operador;
 	char  *postfija;
@@ -93,11 +98,14 @@ char* infijaToPostfija(char * infija){
 	int j=0;
 	int i=0;
 	ptrNodoOp pilaOp = NULL;
+
+	//creamos el ciclo para procesar la cadena infija
 	int longitud= strlen(infija);
+
 	while (i<longitud){
 		elemento= infija[i];
 		i++;
-
+	//procesar todos los caracteres numericos de izquierda a derecha hasta encontrar un operador
 			while(esOperando(elemento)){
 				postfija[j]=elemento;
 				j++;
@@ -105,11 +113,11 @@ char* infijaToPostfija(char * infija){
 				elemento= infija[i];
 				i++;
 			}
-			postfija[j]= '$';
+			postfija[j]= '$'; //delimitador
 			j++;
 
-		if (esOperador(elemento)){
-			if(!estaVacia(pilaOp)){
+		if (esOperador(elemento)){	//generamos pila de operadores
+			if(!estaVacia(pilaOp)){	//check pila diferente de vacio
 				int seDebeContinuar;
 				do{
 					operador=popOp(&pilaOp);
@@ -177,6 +185,8 @@ int EsDecimal (const char *cadena) { /* Automata 1 */
  return 0;
 } /* fin EsPalabra */
 
+
+//pila de la calculadora
 typedef struct tnodo
 {
    int info;
@@ -254,13 +264,14 @@ int main(){
 	char *token;
 
 
-	token = strtok(postfija, delimitador);
+	token = strtok(postfija, delimitador); 
 
 		   /* para recorrer la cadena con el $ como delimitador */
+		   //mientras token diferente de vacio 
 		   while( token != NULL ) {
 		     if(VerificaDecimal(token) && EsDecimal(token)){
 
-		    	push(&pila, atoi(token));
+		    	push(&pila, atoi(token)); //transformamos caracter a numero
 		    	printf("%s \n", token);
 		      }else{
 
