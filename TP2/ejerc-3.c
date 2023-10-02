@@ -304,12 +304,7 @@ int main(){
 		      token = strtok(NULL, delimitador);
 
 		   }
-<<<<<<< HEAD
-		   
-		   printf("Valor de la pila %d \n", pop(&pila));
-=======
 		   printf("El resultado es %d", pop(&pila));
->>>>>>> bb3cad4a2cf796daadcadb1a98564862832d657a
 
 		   nuevaOperacion(&seguir);
 	}while (seguir);
