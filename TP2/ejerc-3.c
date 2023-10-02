@@ -245,16 +245,16 @@ if (next == 'y' || next == 'Y')
 
 int main(){
 	bool seguir = true;
-	
+
 	do{
-	
+
 	char cadena [100];
 	// char cadena[]="12*12-1000";
 
 	tomarCalculo(cadena);
 	char *postfija;
 	postfija=infijaToPostfija(cadena);
-	printf("%s \n",postfija);
+	printf("Cadena postfija %s \n",postfija);
 
 	ptrNodo pila = NULL;
 	int op2;
@@ -264,15 +264,15 @@ int main(){
 	char *token;
 
 
-	token = strtok(postfija, delimitador); 
+	token = strtok(postfija, delimitador);
 
 		   /* para recorrer la cadena con el $ como delimitador */
-		   //mientras token diferente de vacio 
+		   //mientras token diferente de vacio
 		   while( token != NULL ) {
 		     if(VerificaDecimal(token) && EsDecimal(token)){
 
 		    	push(&pila, atoi(token)); //transformamos caracter a numero
-		    	printf("%s \n", token);
+		    	//printf("%s \n", token);
 		      }else{
 
 		   switch(token[0]){
@@ -304,11 +304,11 @@ int main(){
 		      token = strtok(NULL, delimitador);
 
 		   }
-		   printf("%d", pop(&pila));
+		   printf("El resultado es %d", pop(&pila));
 
 		   nuevaOperacion(&seguir);
 	}while (seguir);
-	
+
 	printf("\n-------------Fin Programa---------------");
 	return 0;
 }
