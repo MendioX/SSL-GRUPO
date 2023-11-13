@@ -16,6 +16,7 @@ FIN             \b(fin)\b
 {RESERVADA} {yyval.reservada = yytext; return(RESERVADA);}
 {TEXTO}	    {sscanf(yytextx, "%s",yyval.cad); return(CADENA);}
 {NUMBERS}   {yyval.number = atoi(yytext); return (ENTERO);}
+{SIMBOLOS}   {yyval.simbolos = atoi(yytext); return (SIMBOLOS);}
 ";"         {return (PUNTOCOMA);}
 ","         {return (COMA);}
 "("         {return (PARENTESISOPEN);}

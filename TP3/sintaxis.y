@@ -4,7 +4,7 @@
     int yyerror(char *s);
     void procesarSentenciaReservada(const char* palabraReservada);
 %}
-%token INICIO FIN ENTERO PUNTOCOMA COMA RESERVADA NUMBERS TEXTO PARENTESISOPEN PARENTESISCLOSE
+%token INICIO FIN ENTERO SIMBOLOS PUNTOCOMA ASIGNACION COMA RESERVADA NUMBERS TEXTO PARENTESISOPEN PARENTESISCLOSE
 
 %type <cad> TEXTO
 %type <number> ENTERO
@@ -27,7 +27,7 @@ stmt: RESERVADA PUNTOCOMA { procesarSentenciaReservada($1); }
     | RESERVADA PARENTESISOPEN lista_expr PARENTESISCLOSE PUNTOCOMA { procesarSentenciaReservada($1); }
     ;
 lista_vars: TEXTO 
-    | lista_vars PUNTOCOMA TEXTO 
+    | lista_vars COMA TEXTO 
     ;
 
 expr: NUMBERS 
