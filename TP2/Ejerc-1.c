@@ -81,7 +81,7 @@ int EsDecimal (const char *cadena) { /* Automata 1 */
  return 0;
 } /* fin EsPalabra */
 
-int EsOctal (const char *cadena) { /* Automata 1 */
+int EsOctal (const char *cadena) { /* Automata 2 */
  static int tt [4][2] = {{1,3}, /* Tabla de Transiciones */
  {2,2},
 {2,2},
@@ -99,7 +99,7 @@ int EsOctal (const char *cadena) { /* Automata 1 */
 } /* fin EsPalabra */
 
 
-int EsHexadecimal (const char *cadena) { /* Automata 1 */
+int EsHexadecimal (const char *cadena) { /* Automata 3 */
  static int tt [5][3] = {{1,4,4}, /* Tabla de Transiciones */
  {4,2,4},
 {3,4,3},
@@ -121,11 +121,7 @@ int EsHexadecimal (const char *cadena) { /* Automata 1 */
 int main () {
 	char s1[100];
 	scanf("%s", s1);
-	//hola
 
- //if (! VerificaOctal(s1)) printf("Caracteres invalidos\n");
- //if (EsOctal(s1))printf("Pertenece al lenguaje\n");
- //printf("no pertenece al lenguaje\n"); return 0;
  const char s[2] = "$";
  char *token;
 

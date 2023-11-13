@@ -10,10 +10,7 @@ void tomaCaracter (int contador);
 int main(int argc, char const *argv[])
 {
    
- 
     tomaCaracter(0);
-
-
     return 0;
 }
 
