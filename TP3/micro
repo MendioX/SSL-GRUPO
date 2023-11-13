@@ -1,0 +1,5 @@
+inicio
+leer(a, b);
+a := 3 + b - 5;
+escribir (a);
+fin
