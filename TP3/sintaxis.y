@@ -57,3 +57,8 @@ void procesarSentenciaReservada(const char* palabraReservada) {
         printf("Otra sentencia RESERVADA\n");
     }
 }
+
+int main (int argc, char **argv){
+yyparse();
+return 0;
+}
