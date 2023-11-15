@@ -2,6 +2,6 @@
 cls
 echo "<inicio bison y flex>"
 flex -l lexico.l
-bison -dv sintaxis.y
-gcc -o main sintaxis.tab.c lex.yy.c -lfl
+bison -yd sintaxis.y
+gcc y.tab.c lex.yy.c -lfl -o output
 echo "<fin>"

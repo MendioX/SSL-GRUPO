@@ -1,30 +1,34 @@
 %{
 #include <stdlib.h>
 #include <string.h>
-#include "sintaxis.tab.h"
-void showError();
+#include <stdio.h>
+#include "y.tab.h"
+
 %}
-TEXTO           [a-zA-Z]*
-NUMBERS         [0-9]*
-SIMBOLOS        [+\-*/]
-RESERVADA       \b(leer|escribir)\b
-INICIO          \b(inicio)\b
-FIN             \b(fin)\b
+
+%option noyywrap
+texto           [a-zA-Z]*
+numbers         [0-9]*
+simbolos        [+\-*/]
+reservada       leer|escribir
+inicio          inicio
+fin             fin
+
 %%
-{INICIO}    {yyval.inicio = yytext; return(INICIO);}
-{INICIO}    {yyval.fin = yytext; return(FIN);}
-{RESERVADA} {yyval.reservada = yytext; return(RESERVADA);}
-{TEXTO}	    {sscanf(yytextx, "%s",yyval.cad); return(CADENA);}
-{NUMBERS}   {yyval.number = atoi(yytext); return (ENTERO);}
-{SIMBOLOS}   {yyval.simbolos = atoi(yytext); return (SIMBOLOS);}
+{inicio}    {yylval.inicio = yytext; return(INICIO);}
+{fin}       {yylval.fin = yytext; return(FIN);}
+{reservada} {yylval.reservada = yytext; return(RESERVADA);}
+{texto}	    {sscanf(yytext, "%s",yylval.cad); return(TEXTO);}
+{numbers}   {yylval.number = atoi(yytext); return (ENTERO);}
+{simbolos}  {yylval.simbolos = atoi(yytext); return (SIMBOLOS);}
 ";"         {return (PUNTOCOMA);}
 ","         {return (COMA);}
 "("         {return (PARENTESISOPEN);}
 ")"         {return (PARENTESISCLOSE);}
 ":="        {return (ASIGNACION);}
 [ \t\r\n]+  {}
-.           {showError(); return(OTHER);}
-%%
-void showError(char* other){
-    printf("    || Error lexico: "%s"", other );
-}
+.           {printf("Error lexico");   return(OTHER);}
+
+
+
+

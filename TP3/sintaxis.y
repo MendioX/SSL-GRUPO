@@ -1,30 +1,38 @@
 %{
     #include <stdlib.h>
+    #include <stdio.h>
+    void yyerror(char *s);
     int yylex();
-    int yyerror(char *s);
-    void procesarSentenciaReservada(const char* palabraReservada);
+    #include <unistd.h>
 %}
-%token INICIO FIN ENTERO SIMBOLOS PUNTOCOMA ASIGNACION COMA RESERVADA NUMBERS TEXTO PARENTESISOPEN PARENTESISCLOSE
-
-%type <cad> TEXTO
-%type <number> ENTERO
-%type <reservada> RESERVADA
 
 
 %union{
     char cad[20];
     int number;
     char *reservada;
+    char *inicio;
+    char *fin;
+    int simbolos;
 }
 
+%token INICIO FIN ENTERO SIMBOLOS PUNTOCOMA ASIGNACION COMA RESERVADA NUMBERS TEXTO PARENTESISOPEN PARENTESISCLOSE OTHER
+
+%type <cad> TEXTO
+%type <number> ENTERO
+%type <reservada> RESERVADA
+%type <inicio> INICIO
+%type <fin> FIN
+%type <simbolos> SIMBOLOS
+
 %%
-prog: INICIO stmt FIN {printf("(SETEO DE PROGRAMA): \"%s\"\n",$1);}
+prog: INICIO stmt FIN 
     ;
 
-stmt: RESERVADA PUNTOCOMA { procesarSentenciaReservada($1); }
-    | RESERVADA PARENTESISOPEN lista_vars PARENTESISCLOSE PUNTOCOMA { procesarSentenciaReservada($1); }
-    | TEXTO ASIGNACION expr PUNTOCOMA { /* Código semántico para la asignación */ }
-    | RESERVADA PARENTESISOPEN lista_expr PARENTESISCLOSE PUNTOCOMA { procesarSentenciaReservada($1); }
+stmt: RESERVADA PUNTOCOMA
+    | RESERVADA PARENTESISOPEN lista_vars PARENTESISCLOSE PUNTOCOMA 
+    | TEXTO ASIGNACION expr PUNTOCOMA 
+    | RESERVADA PARENTESISOPEN lista_expr PARENTESISCLOSE PUNTOCOMA 
     ;
 lista_vars: TEXTO 
     | lista_vars COMA TEXTO 
@@ -40,25 +48,19 @@ lista_expr: expr
     ;
 %%
 
-int yyerror(char *s) {
-    printf(stderr, "Error sintáctico: %s\n", s);
+
+
+int main(int argc, char **argv){
+    yyparse();
+    getchar();
     return 0;
 }
 
-void procesarSentenciaReservada(const char* palabraReservada) {
-    if (strcmp(palabraReservada, "leer") == 0) {
-        /* Código semántico para la sentencia LEER */
-        printf("Sentencia LEER\n");
-    } else if (strcmp(palabraReservada, "escribir") == 0) {
-        /* Código semántico para la sentencia ESCRIBIR */
-        printf("Sentencia ESCRIBIR\n");
-    } else {
-        /* Código semántico para otros casos de RESERVADA */
-        printf("Otra sentencia RESERVADA\n");
-    }
+void yyerror(char *s) {
+   
+    printf("Error sintactico");
 }
 
-int main (int argc, char **argv){
-yyparse();
-return 0;
+int yywrap(){
+    return 1;
 }
