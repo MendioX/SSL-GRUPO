@@ -692,7 +692,7 @@ YY_RULE_SETUP
 case 4:
 YY_RULE_SETUP
 #line 21 "lexico.l"
-{sscanf(yytext, "%s",yylval.cad); return(TEXTO);}
+{sscanf(yytext, "%s",yylval.cad); return(IDENTIFICADOR);}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP

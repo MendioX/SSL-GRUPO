@@ -7,7 +7,7 @@
 %}
 
 %option noyywrap
-texto           [a-zA-Z]*
+identificador           [a-zA-Z]*
 numbers         [0-9]*
 simbolos        [+\-*/]
 reservada       leer|escribir
@@ -18,7 +18,7 @@ fin             fin
 {inicio}    {yylval.inicio = yytext; return(INICIO);}
 {fin}       {yylval.fin = yytext; return(FIN);}
 {reservada} {yylval.reservada = yytext; return(RESERVADA);}
-{texto}	    {sscanf(yytext, "%s",yylval.cad); return(TEXTO);}
+{identificador}	    {sscanf(yytext, "%s",yylval.cad); return(IDENTIFICADOR);}
 {numbers}   {yylval.number = atoi(yytext); return (ENTERO);}
 {simbolos}  {yylval.simbolos = atoi(yytext); return (SIMBOLOS);}
 ";"         {return (PUNTOCOMA);}
