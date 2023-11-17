@@ -118,7 +118,7 @@ void freeSymbolTable() {
 /*Función para imprimir la tabla de símbolos (solo para propósitos de depuración)*/ 
 void printSymbolTable() {
     SymbolTableNode* current = symbolTable;
-    printf("Tabla de símbolos:\n");
+    printf("Tabla de simbolos:\n");
     while (current != NULL) {
         printf("%s\n", current->id);
         current = current->next;
@@ -133,8 +133,9 @@ void lista_vars_check(char* lista);
 int isIdDeclared(char* id);
 
 
+
 /* Line 189 of yacc.c  */
-#line 138 "y.tab.c"
+#line 139 "y.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -197,19 +198,20 @@ typedef union YYSTYPE
 {
 
 /* Line 214 of yacc.c  */
-#line 66 "sintaxis.y"
+#line 67 "sintaxis.y"
 
-    char cad[20];
+    char cad[40];
     int number;
     char reservada[10];
     char *inicio;
     char *fin;
+    char *coma;
     int simbolos;
 
 
 
 /* Line 214 of yacc.c  */
-#line 213 "y.tab.c"
+#line 215 "y.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -221,7 +223,7 @@ typedef union YYSTYPE
 
 
 /* Line 264 of yacc.c  */
-#line 225 "y.tab.c"
+#line 227 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -491,7 +493,7 @@ static const yytype_uint8 yytranslate[] =
    YYRHS.  */
 static const yytype_uint8 yyprhs[] =
 {
-       0,     0,     3,     7,     8,    11,    17,    22,    24,    28,
+       0,     0,     3,     7,     8,    11,    17,    22,    26,    28,
       30,    32
 };
 
@@ -500,15 +502,15 @@ static const yytype_int8 yyrhs[] =
 {
       16,     0,    -1,     3,    17,     4,    -1,    -1,    17,    18,
       -1,     5,    11,    19,    12,     9,    -1,     6,    13,    20,
-       9,    -1,     6,    -1,    19,    10,     6,    -1,     7,    -1,
+       9,    -1,    19,    10,     6,    -1,     6,    -1,     7,    -1,
        6,    -1,    20,     8,    20,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    85,    85,    88,    89,    92,    96,   102,   103,   106,
-     107,   108
+       0,    87,    87,    90,    91,    94,    98,   104,   105,   109,
+     110,   111
 };
 #endif
 
@@ -544,7 +546,7 @@ static const yytype_uint8 yyr1[] =
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     3,     0,     2,     5,     4,     1,     3,     1,
+       0,     2,     3,     0,     2,     5,     4,     3,     1,     1,
        1,     3
 };
 
@@ -554,8 +556,8 @@ static const yytype_uint8 yyr2[] =
 static const yytype_uint8 yydefact[] =
 {
        0,     3,     0,     0,     1,     2,     0,     0,     4,     0,
-       0,     7,     0,    10,     9,     0,     0,     0,     0,     6,
-       8,     5,    11
+       0,     8,     0,    10,     9,     0,     0,     0,     0,     6,
+       7,     5,    11
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
@@ -1417,7 +1419,7 @@ yyreduce:
         case 5:
 
 /* Line 1455 of yacc.c  */
-#line 93 "sintaxis.y"
+#line 95 "sintaxis.y"
     {
         processReservada((yyvsp[(1) - (5)].reservada), (yyvsp[(3) - (5)].cad));
     }
@@ -1426,7 +1428,7 @@ yyreduce:
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 97 "sintaxis.y"
+#line 99 "sintaxis.y"
     {
         stackId((yyvsp[(1) - (4)].cad));
     }
@@ -1435,7 +1437,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1439 "y.tab.c"
+#line 1441 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1647,31 +1649,32 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 111 "sintaxis.y"
+#line 114 "sintaxis.y"
 
 
 
 
-int main(int argc, char **argv){
-    printf("      Comienzo de analis... \n");
-    printf("--------------------------------------\n");
 
-    yyparse();
-    
-    getchar();
-    printf("--------------------------------------\n");
-    
-     printf("       Fin analisis... \n");
-    return 0;
-}
 
 void lista_vars_stack(char* lista) {
     /* Aquí puedes procesar la lista de variables y agregarlas a la tabla de símbolos*/
-    char* token = strtok(lista, ",");
+
+    // Hacer una copia de la cadena original
+    char* lista_copy = strdup(lista);
+    if (lista_copy == NULL) {
+        fprintf(stderr, "Error: No se pudo asignar memoria para la copia de la lista de variables.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // Tokenizar la copia de la cadena
+    char* token = strtok(lista_copy, ",");
     while (token != NULL) {
         stackId(token);
         token = strtok(NULL, ",");
     }
+
+    // Liberar la memoria de la copia
+    free(lista_copy);
 }
 
 void lista_vars_check (char* lista) {
@@ -1704,8 +1707,9 @@ void stackId(char* id) {
 
 void processReservada(char* reservada, char* listaVars) {
     printf("Procesando palabra reservada: %s\n", reservada);
+    printf("Procesando palabra lista: %s\n", listaVars);
     if (strcmp(reservada, "leer") == 0) {
-        printf("\nInstruccion LEER\n");
+        printf("\nInstruccion LEER\n\n");
         lista_vars_stack(listaVars);
     } else if (strcmp(reservada, "escribir") == 0) {
         printf("\nInstruccion ESCRIBIR\n");
@@ -1726,6 +1730,13 @@ int isIdDeclared(char* id) {
     return 0; // El ID no está en la tabla de símbolos
 }
 
+
+
+
+
+
+
+
 void yyerror(char *s) {
    
     printf("Error sintactico");
@@ -1733,4 +1744,20 @@ void yyerror(char *s) {
 
 int yywrap(){
     return 1;
+}
+
+
+int main(int argc, char **argv){
+    printf("      Comienzo de analis... \n");
+    printf("--------------------------------------\n");
+
+    yyparse();
+    
+    getchar();
+    printf("--------------------------------------\n");
+    
+     printf("       Fin analisis... \n");
+     printf("       ID encontrados \n");
+     printSymbolTable();
+    return 0;
 }

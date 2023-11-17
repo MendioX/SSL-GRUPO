@@ -75,19 +75,20 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 66 "sintaxis.y"
+#line 67 "sintaxis.y"
 
-    char cad[20];
+    char cad[40];
     int number;
     char reservada[10];
     char *inicio;
     char *fin;
+    char *coma;
     int simbolos;
 
 
 
 /* Line 1676 of yacc.c  */
-#line 91 "y.tab.h"
+#line 92 "y.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

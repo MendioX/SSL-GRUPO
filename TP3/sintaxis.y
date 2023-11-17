@@ -47,7 +47,7 @@ void freeSymbolTable() {
 /*Función para imprimir la tabla de símbolos (solo para propósitos de depuración)*/ 
 void printSymbolTable() {
     SymbolTableNode* current = symbolTable;
-    printf("Tabla de símbolos:\n");
+    printf("Tabla de simbolos:\n");
     while (current != NULL) {
         printf("%s\n", current->id);
         current = current->next;
@@ -60,15 +60,17 @@ void processReservada(char* reservada, char* listaVars);
 void lista_vars_stack(char* lista);
 void lista_vars_check(char* lista);
 int isIdDeclared(char* id);
+
 %}
 
 
 %union{
-    char cad[20];
+    char cad[40];
     int number;
     char reservada[10];
     char *inicio;
     char *fin;
+    char *coma;
     int simbolos;
 }
 
@@ -80,7 +82,7 @@ int isIdDeclared(char* id);
 %type <inicio> INICIO
 %type <fin> FIN
 %type <simbolos> SIMBOLOS
-
+%type <coma> COMA
 %%
 prog: INICIO codigo FIN 
     ;
@@ -99,9 +101,10 @@ stmt: RESERVADA PARENTESISOPEN lista_vars PARENTESISCLOSE PUNTOCOMA
     }
     ;
 
-lista_vars: IDENTIFICADOR 
-    | lista_vars COMA IDENTIFICADOR 
+lista_vars: lista_vars COMA IDENTIFICADOR 
+    |  IDENTIFICADOR 
     ;
+
 
 expr: ENTERO 
     | IDENTIFICADOR 
@@ -112,26 +115,27 @@ expr: ENTERO
 
 
 
-int main(int argc, char **argv){
-    printf("      Comienzo de analis... \n");
-    printf("--------------------------------------\n");
 
-    yyparse();
-    
-    getchar();
-    printf("--------------------------------------\n");
-    
-     printf("       Fin analisis... \n");
-    return 0;
-}
 
 void lista_vars_stack(char* lista) {
     /* Aquí puedes procesar la lista de variables y agregarlas a la tabla de símbolos*/
-    char* token = strtok(lista, ",");
+
+    // Hacer una copia de la cadena original
+    char* lista_copy = strdup(lista);
+    if (lista_copy == NULL) {
+        fprintf(stderr, "Error: No se pudo asignar memoria para la copia de la lista de variables.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // Tokenizar la copia de la cadena
+    char* token = strtok(lista_copy, ",");
     while (token != NULL) {
         stackId(token);
         token = strtok(NULL, ",");
     }
+
+    // Liberar la memoria de la copia
+    free(lista_copy);
 }
 
 void lista_vars_check (char* lista) {
@@ -164,8 +168,9 @@ void stackId(char* id) {
 
 void processReservada(char* reservada, char* listaVars) {
     printf("Procesando palabra reservada: %s\n", reservada);
+    printf("Procesando palabra lista: %s\n", listaVars);
     if (strcmp(reservada, "leer") == 0) {
-        printf("\nInstruccion LEER\n");
+        printf("\nInstruccion LEER\n\n");
         lista_vars_stack(listaVars);
     } else if (strcmp(reservada, "escribir") == 0) {
         printf("\nInstruccion ESCRIBIR\n");
@@ -186,6 +191,13 @@ int isIdDeclared(char* id) {
     return 0; // El ID no está en la tabla de símbolos
 }
 
+
+
+
+
+
+
+
 void yyerror(char *s) {
    
     printf("Error sintactico");
@@ -193,4 +205,20 @@ void yyerror(char *s) {
 
 int yywrap(){
     return 1;
+}
+
+
+int main(int argc, char **argv){
+    printf("      Comienzo de analis... \n");
+    printf("--------------------------------------\n");
+
+    yyparse();
+    
+    getchar();
+    printf("--------------------------------------\n");
+    
+     printf("       Fin analisis... \n");
+     printf("       ID encontrados \n");
+     printSymbolTable();
+    return 0;
 }

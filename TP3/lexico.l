@@ -7,7 +7,7 @@
 %}
 
 %option noyywrap
-identificador           [a-zA-Z]*
+identificador   [a-zA-Z][a-zA-Z0-9]{0,31}
 numbers         [0-9]*
 simbolos        [+\-*/]
 reservada       leer|escribir
@@ -22,7 +22,7 @@ fin             fin
 {numbers}   {yylval.number = atoi(yytext); return (ENTERO);}
 {simbolos}  {yylval.simbolos = atoi(yytext); return (SIMBOLOS);}
 ";"         {return (PUNTOCOMA);}
-","         {return (COMA);}
+","         {yylval.coma = yytext; return(COMA);}
 "("         {return (PARENTESISOPEN);}
 ")"         {return (PARENTESISCLOSE);}
 ":="        {return (ASIGNACION);}
