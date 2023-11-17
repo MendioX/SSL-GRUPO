@@ -72,13 +72,69 @@
 
     #include <stdlib.h>
     #include <stdio.h>
+    #include <string.h>
+    #include <unistd.h>
     void yyerror(char *s);
     int yylex();
-    #include <unistd.h>
+
+   /*Estructura para un nodo en la tabla de símbolos*/ 
+
+typedef struct SymbolTableNode {
+    char id[20];
+    struct SymbolTableNode* next;
+} SymbolTableNode;
+
+
+/*Tabla de símbolos*/ 
+SymbolTableNode* symbolTable = NULL;
+
+
+
+/*Función para insertar un ID en la tabla de símbolos*/ 
+void insertId(char* id) {
+    SymbolTableNode* newNode = (SymbolTableNode*)malloc(sizeof(SymbolTableNode));
+    if (newNode == NULL) {
+        fprintf(stderr, "Error: No se pudo asignar memoria para el nodo de la tabla de símbolos.\n");
+        exit(EXIT_FAILURE);
+    }
+    strcpy(newNode->id, id);
+    newNode->next = symbolTable;
+    symbolTable = newNode;
+}
+
+
+
+
+/*Función para liberar la memoria de la tabla de símbolos*/ 
+void freeSymbolTable() {
+    SymbolTableNode* current = symbolTable;
+    while (current != NULL) {
+        SymbolTableNode* next = current->next;
+        free(current);
+        current = next;
+    }
+}
+
+/*Función para imprimir la tabla de símbolos (solo para propósitos de depuración)*/ 
+void printSymbolTable() {
+    SymbolTableNode* current = symbolTable;
+    printf("Tabla de símbolos:\n");
+    while (current != NULL) {
+        printf("%s\n", current->id);
+        current = current->next;
+    }
+}
+
+/* Declaraciones adelantadas de funciones*/
+void stackId(char* id);
+void processReservada(char* reservada, char* listaVars);
+void lista_vars_stack(char* lista);
+void lista_vars_check(char* lista);
+int isIdDeclared(char* id);
 
 
 /* Line 189 of yacc.c  */
-#line 82 "y.tab.c"
+#line 138 "y.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -141,11 +197,11 @@ typedef union YYSTYPE
 {
 
 /* Line 214 of yacc.c  */
-#line 10 "sintaxis.y"
+#line 66 "sintaxis.y"
 
     char cad[20];
     int number;
-    char *reservada;
+    char reservada[10];
     char *inicio;
     char *fin;
     int simbolos;
@@ -153,7 +209,7 @@ typedef union YYSTYPE
 
 
 /* Line 214 of yacc.c  */
-#line 157 "y.tab.c"
+#line 213 "y.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -165,7 +221,7 @@ typedef union YYSTYPE
 
 
 /* Line 264 of yacc.c  */
-#line 169 "y.tab.c"
+#line 225 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -451,8 +507,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    29,    29,    32,    33,    36,    37,    40,    41,    44,
-      45,    46
+       0,    85,    85,    88,    89,    92,    96,   102,   103,   106,
+     107,   108
 };
 #endif
 
@@ -1358,10 +1414,28 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-      
+        case 5:
 
 /* Line 1455 of yacc.c  */
-#line 1365 "y.tab.c"
+#line 93 "sintaxis.y"
+    {
+        processReservada((yyvsp[(1) - (5)].reservada), (yyvsp[(3) - (5)].cad));
+    }
+    break;
+
+  case 6:
+
+/* Line 1455 of yacc.c  */
+#line 97 "sintaxis.y"
+    {
+        stackId((yyvsp[(1) - (4)].cad));
+    }
+    break;
+
+
+
+/* Line 1455 of yacc.c  */
+#line 1439 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1573,7 +1647,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 49 "sintaxis.y"
+#line 111 "sintaxis.y"
 
 
 
@@ -1589,6 +1663,67 @@ int main(int argc, char **argv){
     
      printf("       Fin analisis... \n");
     return 0;
+}
+
+void lista_vars_stack(char* lista) {
+    /* Aquí puedes procesar la lista de variables y agregarlas a la tabla de símbolos*/
+    char* token = strtok(lista, ",");
+    while (token != NULL) {
+        stackId(token);
+        token = strtok(NULL, ",");
+    }
+}
+
+void lista_vars_check (char* lista) {
+    
+
+    char* token = strtok(lista, ",");
+    while (token != NULL) {
+
+         if (!isIdDeclared(token)) {
+        printf("\n-------------------------------------------------\n");
+        fprintf(stderr, "   Error semántico: Identificador utilizado sin declarar '%s'\n", token);
+        printf("-------------------------------------------------\n");
+        exit(EXIT_FAILURE);
+         }
+        token = strtok(NULL, ",");
+    }
+}
+
+void stackId(char* id) {
+    if (!isIdDeclared(id)) {
+        insertId(id);
+    } else {
+        printf("\n-------------------------------------------------\n");
+        fprintf(stderr, "   Error semántico: Identificador duplicado '%s'\n", id);
+        printf("-------------------------------------------------\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
+
+void processReservada(char* reservada, char* listaVars) {
+    printf("Procesando palabra reservada: %s\n", reservada);
+    if (strcmp(reservada, "leer") == 0) {
+        printf("\nInstruccion LEER\n");
+        lista_vars_stack(listaVars);
+    } else if (strcmp(reservada, "escribir") == 0) {
+        printf("\nInstruccion ESCRIBIR\n");
+         lista_vars_check(listaVars);
+        
+    }
+}
+
+/*Función para verificar si un ID ya está en la tabla de símbolos*/ 
+int isIdDeclared(char* id) {
+    SymbolTableNode* current = symbolTable;
+    while (current != NULL) {
+        if (strcmp(current->id, id) == 0) {
+            return 1; // El ID ya está en la tabla de símbolos
+        }
+        current = current->next;
+    }
+    return 0; // El ID no está en la tabla de símbolos
 }
 
 void yyerror(char *s) {

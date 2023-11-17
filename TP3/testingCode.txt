@@ -1,0 +1,5 @@
+inicio
+leer(a,b);
+cc := a + b;
+escribir(cc, a);
+fin

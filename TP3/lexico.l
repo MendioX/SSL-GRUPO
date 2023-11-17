@@ -17,7 +17,7 @@ fin             fin
 %%
 {inicio}    {yylval.inicio = yytext; return(INICIO);}
 {fin}       {yylval.fin = yytext; return(FIN);}
-{reservada} {yylval.reservada = yytext; return(RESERVADA);}
+{reservada} {sscanf(yytext, "%s",yylval.reservada); return(RESERVADA);}
 {identificador}	    {sscanf(yytext, "%s",yylval.cad); return(IDENTIFICADOR);}
 {numbers}   {yylval.number = atoi(yytext); return (ENTERO);}
 {simbolos}  {yylval.simbolos = atoi(yytext); return (SIMBOLOS);}

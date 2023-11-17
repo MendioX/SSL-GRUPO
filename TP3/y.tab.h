@@ -75,11 +75,11 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 10 "sintaxis.y"
+#line 66 "sintaxis.y"
 
     char cad[20];
     int number;
-    char *reservada;
+    char reservada[10];
     char *inicio;
     char *fin;
     int simbolos;
