@@ -26,7 +26,9 @@ fin             fin
 "("         {return (PARENTESISOPEN);}
 ")"         {return (PARENTESISCLOSE);}
 ":="        {return (ASIGNACION);}
-[ \t\r\n]+  {}
+[\n]  {}
+[\r]  {}
+[\t]  {}
 .           {printf("Error lexico");   return(OTHER);}
 
 

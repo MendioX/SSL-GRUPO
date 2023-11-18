@@ -75,7 +75,7 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 67 "sintaxis.y"
+#line 80 "sintaxis.y"
 
     char cad[40];
     int number;
@@ -85,10 +85,13 @@ typedef union YYSTYPE
     char *coma;
     int simbolos;
 
+    ListaId* lista_id;
+    
+
 
 
 /* Line 1676 of yacc.c  */
-#line 92 "y.tab.h"
+#line 95 "y.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
