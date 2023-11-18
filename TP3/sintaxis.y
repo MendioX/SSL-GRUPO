@@ -34,7 +34,6 @@ void insertId(char* id) {
     strcpy(newNode->id, id);
     newNode->next = symbolTable;
     symbolTable = newNode;
-    
 }
 
 
@@ -50,13 +49,9 @@ void freeSymbolTable() {
     }
 }
 
-
-
- 
-
 /* Declaraciones adelantadas de funciones*/
 void stackId(char* id);
-void processReservada(char* reservada, char* listaVars);
+void processReservada(char* reservada, ListaId* listaVars);
 void lista_vars_stack(ListaId* lista);
 void lista_vars_check(ListaId* lista);
 int isIdDeclared(char* id);
@@ -92,6 +87,9 @@ struct ListaId* construir_lista(char* id, struct ListaId* lista_id) {
 
 %token INICIO FIN RESERVADA IDENTIFICADOR ENTERO SIMBOLOS PUNTOCOMA COMA PARENTESISOPEN PARENTESISCLOSE ASIGNACION OTHER
 
+%left SIMBOLOS
+%left PUNTOCOMA
+
 %type <cad> IDENTIFICADOR 
 %type <number> ENTERO
 %type <reservada> RESERVADA
@@ -100,9 +98,10 @@ struct ListaId* construir_lista(char* id, struct ListaId* lista_id) {
 %type <simbolos> SIMBOLOS
 %type <coma> COMA
 %type <lista_id> lista_vars
+
+
 %%
-prog: INICIO codigo FIN 
-    ;
+prog: INICIO codigo FIN;
 
 codigo: /* empty */
     | codigo stmt 
@@ -175,7 +174,7 @@ void stackId(char* id) {
 }
 
 
-void processReservada(char* reservada, char* listaVars) {
+void processReservada(char* reservada, ListaId* listaVars) {
     printf("Procesando palabra reservada: %s\n", reservada);
     printf("Procesando palabra lista: %s\n", listaVars);
     if (strcmp(reservada, "leer") == 0) {
