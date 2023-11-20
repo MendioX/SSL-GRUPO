@@ -1,5 +1,5 @@
 inicio
 leer(a,b,c);
-cc := a + b;
+cc:=a+b;
 escribir(cc,a);
 fin
