@@ -105,7 +105,6 @@ void insertId(char* id) {
     strcpy(newNode->id, id);
     newNode->next = symbolTable;
     symbolTable = newNode;
-    
 }
 
 
@@ -121,13 +120,9 @@ void freeSymbolTable() {
     }
 }
 
-
-
- 
-
 /* Declaraciones adelantadas de funciones*/
 void stackId(char* id);
-void processReservada(char* reservada, char* listaVars);
+void processReservada(char* reservada, ListaId* listaVars);
 void lista_vars_stack(ListaId* lista);
 void lista_vars_check(ListaId* lista);
 int isIdDeclared(char* id);
@@ -148,7 +143,7 @@ struct ListaId* construir_lista(char* id, struct ListaId* lista_id) {
 
 
 /* Line 189 of yacc.c  */
-#line 152 "y.tab.c"
+#line 147 "y.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -211,7 +206,7 @@ typedef union YYSTYPE
 {
 
 /* Line 214 of yacc.c  */
-#line 80 "sintaxis.y"
+#line 75 "sintaxis.y"
 
     char cad[40];
     int number;
@@ -227,7 +222,7 @@ typedef union YYSTYPE
 
 
 /* Line 214 of yacc.c  */
-#line 231 "y.tab.c"
+#line 226 "y.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -239,7 +234,7 @@ typedef union YYSTYPE
 
 
 /* Line 264 of yacc.c  */
-#line 243 "y.tab.c"
+#line 238 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -454,7 +449,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  4
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   17
+#define YYLAST   16
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  15
@@ -525,8 +520,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,   104,   104,   107,   108,   111,   116,   122,   126,   133,
-     134,   135
+       0,   104,   104,   106,   107,   110,   115,   121,   125,   132,
+     133,   134
 };
 #endif
 
@@ -589,7 +584,7 @@ static const yytype_int8 yypact[] =
 {
        5,    -8,     4,    -4,    -8,    -8,     2,    -2,    -8,     6,
        0,    -8,    -7,    -8,    -8,     1,     8,     7,     0,    -8,
-      -8,    -8,     9
+      -8,    -8,    -8
 };
 
 /* YYPGOTO[NTERM-NUM].  */
@@ -606,13 +601,13 @@ static const yytype_int8 yypgoto[] =
 static const yytype_uint8 yytable[] =
 {
        5,     6,     7,    16,     4,    17,    13,    14,     1,    18,
-      19,    10,    11,     9,    20,    22,    21,    18
+      19,    10,    11,     9,    20,    22,    21
 };
 
 static const yytype_uint8 yycheck[] =
 {
        4,     5,     6,    10,     0,    12,     6,     7,     3,     8,
-       9,    13,     6,    11,     6,    18,     9,     8
+       9,    13,     6,    11,     6,    18,     9
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -1435,7 +1430,7 @@ yyreduce:
         case 5:
 
 /* Line 1455 of yacc.c  */
-#line 112 "sintaxis.y"
+#line 111 "sintaxis.y"
     {
         processReservada((yyvsp[(1) - (5)].reservada), (yyvsp[(3) - (5)].lista_id));
         
@@ -1445,7 +1440,7 @@ yyreduce:
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 117 "sintaxis.y"
+#line 116 "sintaxis.y"
     {
         stackId((yyvsp[(1) - (4)].cad));
     }
@@ -1454,7 +1449,7 @@ yyreduce:
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 123 "sintaxis.y"
+#line 122 "sintaxis.y"
     {
          (yyval.lista_id) = construir_lista((yyvsp[(3) - (3)].cad), (yyvsp[(1) - (3)].lista_id));
     }
@@ -1463,7 +1458,7 @@ yyreduce:
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 127 "sintaxis.y"
+#line 126 "sintaxis.y"
     {
        (yyval.lista_id) = construir_lista((yyvsp[(1) - (1)].cad), NULL);
     }
@@ -1472,7 +1467,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 1476 "y.tab.c"
+#line 1471 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1684,7 +1679,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 138 "sintaxis.y"
+#line 137 "sintaxis.y"
 
 
 
@@ -1725,7 +1720,7 @@ void stackId(char* id) {
 }
 
 
-void processReservada(char* reservada, char* listaVars) {
+void processReservada(char* reservada, ListaId* listaVars) {
     printf("Procesando palabra reservada: %s\n", reservada);
     printf("Procesando palabra lista: %s\n", listaVars);
     if (strcmp(reservada, "leer") == 0) {

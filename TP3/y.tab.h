@@ -75,7 +75,7 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 80 "sintaxis.y"
+#line 75 "sintaxis.y"
 
     char cad[40];
     int number;

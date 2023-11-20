@@ -459,9 +459,14 @@ char *yytext_ptr;
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include "y.tab.h"
 
-#line 465 "lex.yy.c"
+typedef struct ListaId {
+        char id[20];
+        struct ListaId* next;
+    } ListaId;
+
+#include "y.tab.h"
+#line 470 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -612,9 +617,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 17 "lexico.l"
+#line 22 "lexico.l"
 
-#line 618 "lex.yy.c"
+#line 623 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -707,85 +712,85 @@ do_action:	/* This label is used only to access EOF actions. */
 	{ /* beginning of action switch */
 case 1:
 YY_RULE_SETUP
-#line 18 "lexico.l"
+#line 23 "lexico.l"
 {yylval.inicio = yytext; return(INICIO);}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 19 "lexico.l"
+#line 24 "lexico.l"
 {yylval.fin = yytext; return(FIN);}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 20 "lexico.l"
+#line 25 "lexico.l"
 {sscanf(yytext, "%s",yylval.reservada); return(RESERVADA);}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 21 "lexico.l"
+#line 26 "lexico.l"
 {sscanf(yytext, "%s",yylval.cad); return(IDENTIFICADOR);}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 22 "lexico.l"
+#line 27 "lexico.l"
 {yylval.number = atoi(yytext); return (ENTERO);}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 23 "lexico.l"
+#line 28 "lexico.l"
 {yylval.simbolos = atoi(yytext); return (SIMBOLOS);}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 24 "lexico.l"
+#line 29 "lexico.l"
 {return (PUNTOCOMA);}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 25 "lexico.l"
+#line 30 "lexico.l"
 {yylval.coma = yytext; return(COMA);}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 26 "lexico.l"
+#line 31 "lexico.l"
 {return (PARENTESISOPEN);}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 27 "lexico.l"
+#line 32 "lexico.l"
 {return (PARENTESISCLOSE);}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 28 "lexico.l"
+#line 33 "lexico.l"
 {return (ASIGNACION);}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 29 "lexico.l"
+#line 34 "lexico.l"
 {}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 30 "lexico.l"
+#line 35 "lexico.l"
 {}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 31 "lexico.l"
+#line 36 "lexico.l"
 {}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 32 "lexico.l"
-{printf("Error lexico");   return(OTHER);}
+#line 37 "lexico.l"
+{printf("Error lexico.\n"); printf("Mystery character: %s\n", yytext); return(OTHER);}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 37 "lexico.l"
+#line 38 "lexico.l"
 ECHO;
 	YY_BREAK
-#line 789 "lex.yy.c"
+#line 794 "lex.yy.c"
 			case YY_STATE_EOF(INITIAL):
 				yyterminate();
 
@@ -1669,4 +1674,4 @@ int main()
 	return 0;
 	}
 #endif
-#line 37 "lexico.l"
+#line 38 "lexico.l"
