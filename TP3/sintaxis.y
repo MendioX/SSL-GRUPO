@@ -198,7 +198,7 @@ int isIdDeclared(char* id) {
         if (strcmp(current->id, id) == 0) {
             return 1; // El ID ya está en la tabla de símbolos
         }
-        printf("bandera debug:  '%s' -vs- '%s' ",current->id,id);
+        /*printf("bandera debug:  '%s' -vs- '%s' ",current->id,id);*/
         current = current->next;
 
         
